@@ -9,10 +9,14 @@
 
 
 // declare global varibales
-let textArea = document.getElementById('text-area');
-let newGameBtn = document.getElementById('new-game-button');
-let hitBtn = document.getElementById('hit-button');
-let stayBtn = document.getElementById('stay-button');
+
+// Dom variables
+let textArea = document.getElementById('text-area'),
+    newGameBtn = document.getElementById('new-game-button'),
+    hitBtn = document.getElementById('hit-button'),
+    stayBtn = document.getElementById('stay-button');
+
+// Game variables
 let gameStarted = false,
     gameOver = false,
     playerWon = false,
@@ -23,7 +27,6 @@ let gameStarted = false,
     playerScore = 0;
 
 // array hold suits & values
-
 let suits = ['Heats', 'Clubs', 'Diamonds', 'Spades'],
     values = [
         'Ace', 'King', 'Queen', 'Jack', 'Two',
@@ -38,7 +41,7 @@ stayBtn.style.display = 'none';
 
 // listen to the click to init game
 newGameBtn.addEventListener('click', () => {
-    textArea.innerText = 'Game Started..'
+    textArea.innerText = 'Game Started.. \n'
     newGameBtn.style.display = 'none';
     hitBtn.style.display = 'inline';
     stayBtn.style.display = 'inline';
@@ -49,27 +52,17 @@ newGameBtn.addEventListener('click', () => {
 
     deck = createDeck();
     shuffleDeck(deck);
+    console.log(deck);
     playerCards = [ getNextCard(), getNextCard() ];
     dealerCards = [ getNextCard(), getNextCard() ];
     showStatus();
 });
 
-
-function shuffleDeck(deck) {
-    for(let i = 0; i < deck.length; i++) {
-        // math.trunc truncate the decimal value from math.random
-        let swapIdx = math.trunc(math.random() * deck.length);
-        let tmp = deck[swapIdx];
-        deck[swapIdx] = deck[i];
-        deck[i] = tmp;
-    }
-}
-
 function createDeck() {
     let deck = [];
     // looping throw suits & values to generate cards
     for(let suitIdx = 0; suitIdx < suits.length; suitIdx++) {
-        for(let valueIdx = 0; valueIdx < valueIdx.length; valueIdx++) {
+        for(let valueIdx = 0; valueIdx < values.length; valueIdx++) {
             let card = {
                 suit: suits[suitIdx],
                 value: values[valueIdx]
@@ -80,8 +73,19 @@ function createDeck() {
     return deck;
 }
 
+function shuffleDeck(deck) {
+    for(let i = 0; i < deck.length; i++) {
+        // math.trunc truncate the decimal value from math.random
+        let swapIdx = Math.trunc(Math.random() * deck.length);
+        let tmp = deck[swapIdx];
+        deck[swapIdx] = deck[i];
+        deck[i] = tmp;
+    }
+}
+
+
 function getCardString(card) {
-    return card.value + 'of' + card.suit;
+    return card.value + ' of ' + card.suit;
 }
 
 function getNextCard() {
@@ -97,7 +101,7 @@ function showStatus() {
         textArea.innerText += '\n'+ getCardString(deck[i]);
     }
 }
-
+showStatus();
 
 
 

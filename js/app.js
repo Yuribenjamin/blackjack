@@ -60,11 +60,13 @@ newGameBtn.addEventListener('click', () => {
 
 hitBtn.addEventListener('click', () => {
     playerCards.push(getNextCard());
+    checkForEndofGame();
     showStatus();
 });
 
 stayBtn.addEventListener('click', () => {
     gameOver = true;
+    checkForEndofGame();
     showStatus();
 });
 
@@ -147,6 +149,31 @@ function getScore(cardArray) {
         return score + 10;
     }
     return score;
+}
+
+function checkForEndofGame() {
+    updateScores();
+
+    if(gameOver) {
+        // let dealer take  a cards
+        while(dealerScore < playerScore && playerScore <= 21 && dealerScore <= 21 ) {
+            dealerCards.push(getNextCard());
+            updateScores();
+        }
+    }
+    if(playerScore > 21) {
+        playerWon = false;
+        gameOver = true;
+    }else if(dealerScore > 21) {
+        playerWon = true;
+        gameOver = true;
+    }else if (gameOver) {
+        if(playerScore > dealerScore) {
+            playerWon = true;
+        }else {
+            playerWon = false;
+        }
+    }
 }
 
 function showStatus() {

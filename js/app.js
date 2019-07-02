@@ -92,13 +92,81 @@ function getNextCard() {
     return deck.shift();
 }
 
+function updateScores() {
+    dealerScore = getScore(dealerCards);
+    playerScore = getScore(playerCards);
+}
+
+function getCardNumbericValue(card) {
+    switch(card.value) {
+        case 'Ace':
+            return 1;
+        case 'Two':
+            return 2;
+        case 'Three':
+            return 3;
+        case 'Four':
+            return 4;
+        case 'Five':
+            return 5;
+        case 'Six':
+            return 6;
+        case 'Seven':
+            return 7;
+        case 'Eight':
+            return 8;
+        case 'Nine':
+            return 9;
+        default:
+            return 10;
+    }
+}
+
+function getScore(cardArray) {
+    let score = 0;
+    let hasAce = false;
+    for (let i = 0; i < cardArray.length; i++) {
+        let card = cardArray[i];
+        score += getCardNumbericValue(card);
+        if(card.value === 'Ace') {
+            hasAce = 'True';
+        }
+        
+    }
+    if(hasAce && score + 10 <= 21) {
+        return score + 10;
+    }
+    return score;
+}
+
 function showStatus() {
     if(!gameStarted) {
         textArea.innerText = 'Welcome to Blackjack';
         return;
     }
-    for (var i = 0; i < deck.length; i++) {
-        textArea.innerText += '\n'+ getCardString(deck[i]);
+    let dealerCardString = '';
+    for(let i=0; i<dealerCards.length; i++){
+        dealerCardString += getCardString(dealerCards[i]) + '\n';
+    }
+    let playerCardString = '';
+    for(let i=0; i<playerCards.length; i++){
+        playerCardString += getCardString(playerCards[i]) + '\n';
+    }
+
+    updateScores();
+
+    textArea.innerText = `Dealer has:\n ${dealerCardString} (Score: ${dealerScore}) \n\n
+    player has:\n ${playerCardString} (Score: ${playerScore}) \n\n`
+
+    if(gameOver) {
+        if(playerWon) {
+            textArea.innerText += ' You Win!'
+        }else {
+            textArea.innerText += 'Dealer Win!'
+        }
+        newGameBtn.style.display = 'inline';
+        hitBtn.style.display = 'none';
+        stayBtn.style.display = 'none';
     }
 }
 showStatus();

@@ -58,6 +58,16 @@ newGameBtn.addEventListener('click', () => {
     showStatus();
 });
 
+hitBtn.addEventListener('click', () => {
+    playerCards.push(getNextCard());
+    showStatus();
+});
+
+stayBtn.addEventListener('click', () => {
+    gameOver = true;
+    showStatus();
+});
+
 function createDeck() {
     let deck = [];
     // looping throw suits & values to generate cards

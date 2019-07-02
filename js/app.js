@@ -202,8 +202,8 @@ function showStatus() {
 
     updateScores();
 
-    textArea.innerText = `Dealer has:\n ${dealerCardString} (Score: ${dealerScore}) \n\n
-    Player has:\n ${playerCardString} (Score: ${playerScore}) \n\n`
+    textArea.innerText = `Dealer has:\n\n ${dealerCardString}\n (Score: ${dealerScore}) \n\n
+    Player has:\n\n ${playerCardString}\n (Score: ${playerScore}) \n\n`
 
     if(gameOver) {
         if(playerWon) {

@@ -41,7 +41,7 @@ stayBtn.style.display = 'none';
 
 // listen to the click to init game
 newGameBtn.addEventListener('click', () => {
-    textArea.innerText = 'Game Started.. \n'
+
     newGameBtn.style.display = 'none';
     hitBtn.style.display = 'inline';
     stayBtn.style.display = 'inline';
@@ -52,24 +52,26 @@ newGameBtn.addEventListener('click', () => {
 
     deck = createDeck();
     shuffleDeck(deck);
-    console.log(deck);
+
     playerCards = [ getNextCard(), getNextCard() ];
     dealerCards = [ getNextCard(), getNextCard() ];
     showStatus();
 });
 
+// listen to the hit btn
 hitBtn.addEventListener('click', () => {
     playerCards.push(getNextCard());
     checkForEndofGame();
     showStatus();
 });
-
+// listen to the stay btn
 stayBtn.addEventListener('click', () => {
     gameOver = true;
     checkForEndofGame();
     showStatus();
 });
 
+// fn create deck
 function createDeck() {
     let deck = [];
     // looping throw suits & values to generate cards
@@ -85,6 +87,7 @@ function createDeck() {
     return deck;
 }
 
+// fn shuffle
 function shuffleDeck(deck) {
     for(let i = 0; i < deck.length; i++) {
         // math.trunc truncate the decimal value from math.random
@@ -95,20 +98,24 @@ function shuffleDeck(deck) {
     }
 }
 
-
+// fn get cards
 function getCardString(card) {
     return card.value + ' of ' + card.suit;
 }
 
+// fn get next card
 function getNextCard() {
     return deck.shift();
 }
 
+
+// fn updates score
 function updateScores() {
     dealerScore = getScore(dealerCards);
     playerScore = getScore(playerCards);
 }
 
+// fn cards value
 function getCardNumbericValue(card) {
     switch(card.value) {
         case 'Ace':
@@ -134,6 +141,7 @@ function getCardNumbericValue(card) {
     }
 }
 
+// fn get score
 function getScore(cardArray) {
     let score = 0;
     let hasAce = false;
@@ -151,6 +159,7 @@ function getScore(cardArray) {
     return score;
 }
 
+// fn check if game end
 function checkForEndofGame() {
     updateScores();
 
@@ -176,6 +185,7 @@ function checkForEndofGame() {
     }
 }
 
+// fn display status
 function showStatus() {
     if(!gameStarted) {
         textArea.innerText = 'Welcome to Blackjack';
@@ -193,7 +203,7 @@ function showStatus() {
     updateScores();
 
     textArea.innerText = `Dealer has:\n ${dealerCardString} (Score: ${dealerScore}) \n\n
-    player has:\n ${playerCardString} (Score: ${playerScore}) \n\n`
+    Player has:\n ${playerCardString} (Score: ${playerScore}) \n\n`
 
     if(gameOver) {
         if(playerWon) {
